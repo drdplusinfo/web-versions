@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace DrdPlus\WebVersions;
 
-use DrdPlus\WebVersions\Exceptions\NoPatchVersionsMatch;
+use Granam\Git\Exceptions\NoPatchVersionsMatch;
 use Granam\Git\Git;
 use Granam\Strict\Object\StrictObject;
 
