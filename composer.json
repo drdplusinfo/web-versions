@@ -1,11 +1,6 @@
 {
   "name": "drdplus/web-versions",
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "/home/jaroslav/projects/granam/git"
-    }
-  ],
+  "description": "Reads available minor and patch versions of a web files repository",
   "autoload": {
     "psr-4": {
       "DrdPlus\\": "DrdPlus/"
@@ -17,7 +12,6 @@
   },
   "require-dev": {
     "roave/security-advisories": "dev-master",
-    "drdplus/rules-skeleton-web": "^1.0",
     "phpunit/phpunit": "^7.5"
   }
 }
