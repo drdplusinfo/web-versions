@@ -108,7 +108,11 @@ class WebVersions extends StrictObject
     public function getLastPatchVersionOf(string $superiorVersion): string
     {
         if (($this->lastPatchVersionsOf[$superiorVersion] ?? null) === null) {
-            $this->lastPatchVersionsOf[$superiorVersion] = $this->git->getLastPatchVersionOf($superiorVersion, $this->repositoryDir);
+            if ($superiorVersion === $this->getLastUnstableVersion()) {
+                $this->lastPatchVersionsOf[$superiorVersion] = $this->getLastUnstableVersion();
+            } else {
+                $this->lastPatchVersionsOf[$superiorVersion] = $this->git->getLastPatchVersionOf($superiorVersion, $this->repositoryDir);
+            }
         }
 
         return $this->lastPatchVersionsOf[$superiorVersion];

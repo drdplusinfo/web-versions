@@ -205,16 +205,18 @@ class WebVersionsTest extends TestCase
      * @dataProvider provideSuperiorAndRelatedPatchVersions
      * @param string $superiorVersion
      * @param string $expectedPatchVersion
+     * @param string $lastUnstableVersion
      */
     public function I_can_get_last_patch_version_of_minor_or_major_version(
         string $superiorVersion,
-        string $expectedPatchVersion
+        string $expectedPatchVersion,
+        string $lastUnstableVersion = 'mistress'
     ): void
     {
         $web = new WebVersions(
             $this->createGitWithLastPatchVersionOf('some repository dir', $superiorVersion, $expectedPatchVersion),
             'some repository dir',
-            'mistress'
+            $lastUnstableVersion
         );
         self::assertSame($expectedPatchVersion, $web->getLastPatchVersionOf($superiorVersion));
     }
@@ -222,6 +224,7 @@ class WebVersionsTest extends TestCase
     public function provideSuperiorAndRelatedPatchVersions(): array
     {
         return [
+            'last unstable version' => ['mrs. mistress', 'mrs. mistress', 'mrs. mistress'],
             'minor version' => ['1.1', '1.1.14'],
             'major version' => ['2', '2.6.41'],
         ];
