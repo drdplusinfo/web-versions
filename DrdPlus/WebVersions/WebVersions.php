@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace DrdPlus\WebVersions;
 
-use Granam\Git\Exceptions\NoPatchVersionsMatch;
 use Granam\Git\Git;
 use Granam\Strict\Object\StrictObject;
 
@@ -48,7 +47,7 @@ class WebVersions extends StrictObject
     public function getAllMinorVersions(): array
     {
         if ($this->allMinorVersions === null) {
-            $allMinorVersionLikeBranches = $this->git->getAllMinorVersionLikeBranches($this->repositoryDir);
+            $allMinorVersionLikeBranches = $this->git->getAllMinorVersions($this->repositoryDir);
             \array_unshift($allMinorVersionLikeBranches, $this->getLastUnstableVersion());
             $this->allMinorVersions = $allMinorVersionLikeBranches;
         }
@@ -75,11 +74,8 @@ class WebVersions extends StrictObject
     public function getLastStablePatchVersion(): string
     {
         if ($this->lastStablePatchVersion === null) {
-            try {
-                $this->lastStablePatchVersion = $this->git->getLastTagPatchVersion($this->repositoryDir);
-            } catch (NoPatchVersionsMatch $noPatchVersionsMatch) {
-                $this->lastStablePatchVersion = $this->getLastUnstableVersion();
-            }
+            $this->lastStablePatchVersion = $this->git->getLastPatchVersion($this->repositoryDir)
+                ?? $this->getLastUnstableVersion();
         }
 
         return $this->lastStablePatchVersion;
@@ -93,7 +89,7 @@ class WebVersions extends StrictObject
     public function getAllStableMinorVersions(): array
     {
         if ($this->allStableVersions === null) {
-            $this->allStableVersions = $this->git->getAllMinorVersionLikeBranches($this->repositoryDir);
+            $this->allStableVersions = $this->git->getAllMinorVersions($this->repositoryDir);
         }
 
         return $this->allStableVersions;
@@ -112,7 +108,7 @@ class WebVersions extends StrictObject
     public function getLastPatchVersionOf(string $superiorVersion): string
     {
         if (($this->lastPatchVersionsOf[$superiorVersion] ?? null) === null) {
-            $this->lastPatchVersionsOf[$superiorVersion] = $this->git->getLastTagPatchVersionOf($superiorVersion, $this->repositoryDir);
+            $this->lastPatchVersionsOf[$superiorVersion] = $this->git->getLastPatchVersionOf($superiorVersion, $this->repositoryDir);
         }
 
         return $this->lastPatchVersionsOf[$superiorVersion];
@@ -121,10 +117,10 @@ class WebVersions extends StrictObject
     /**
      * @return array|string[]
      */
-    public function getPatchVersions(): array
+    public function getAllPatchVersions(): array
     {
         if ($this->patchVersions === null) {
-            $this->patchVersions = $this->git->getTagPatchVersions($this->repositoryDir);
+            $this->patchVersions = $this->git->getPatchVersions($this->repositoryDir);
         }
 
         return $this->patchVersions;
