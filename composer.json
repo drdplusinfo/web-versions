@@ -1,0 +1,23 @@
+{
+  "name": "drdplus/web-versions",
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "/home/jaroslav/projects/drdplus/rules/rules.skeleton/web"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "DrdPlus\\": "DrdPlus/"
+    }
+  },
+  "require": {
+    "php": ">= 7.1",
+    "granam/git": "^1.0"
+  },
+  "require-dev": {
+    "roave/security-advisories": "dev-master",
+    "drdplus/rules-skeleton-web": "^1.0",
+    "phpunit/phpunit": "^7.5"
+  }
+}
