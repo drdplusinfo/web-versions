@@ -135,11 +135,11 @@ class WebVersionsTest extends TestCase
     {
         return [
             'some patch version' => ['2.1.1', 'mistress', '2.1.1'],
-            'only unstable version' => [null, 'mistress', 'mistress'],
+            'only unstable version' => ['mistress', 'mistress', 'mistress'],
         ];
     }
 
-    private function createGitWithLastStablePatchVersion(string $expectedRepositoryDir, ?string $lastPatchVersion): Git
+    private function createGitWithLastStablePatchVersion(string $expectedRepositoryDir, string $lastPatchVersion): Git
     {
         return new class($expectedRepositoryDir, $lastPatchVersion) extends Git
         {
@@ -152,7 +152,7 @@ class WebVersionsTest extends TestCase
                 $this->lastPatchVersion = $lastPatchVersion;
             }
 
-            public function getLastPatchVersion(string $dir): ?string
+            public function getLastPatchVersion(string $dir): string
             {
                 TestCase::assertTrue(\method_exists(parent::class, __FUNCTION__), parent::class . ' no more has method ' . __FUNCTION__);
                 TestCase::assertSame($this->expectedRepositoryDir, $dir);
@@ -303,5 +303,16 @@ class WebVersionsTest extends TestCase
             }
 
         };
+    }
+
+    /**
+     * @test
+     */
+    public function I_can_ask_it_if_code_has_specific_version(): void
+    {
+        $webVersions = new WebVersions(new Git(), __DIR__);
+        self::assertTrue($webVersions->hasMinorVersion($webVersions->getLastUnstableVersion()));
+        self::assertTrue($webVersions->hasMinorVersion($webVersions->getLastStableMinorVersion()));
+        self::assertFalse($webVersions->hasMinorVersion('-1'));
     }
 }
