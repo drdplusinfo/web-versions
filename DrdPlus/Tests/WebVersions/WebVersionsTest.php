@@ -48,6 +48,7 @@ class WebVersionsTest extends TestCase
 
             public function getAllMinorVersions(string $dir, bool $readLocal = self::INCLUDE_LOCAL_BRANCHES, bool $readRemote = self::INCLUDE_REMOTE_BRANCHES): array
             {
+                TestCase::assertTrue(\method_exists(parent::class, __FUNCTION__), parent::class . ' no more has method ' . __FUNCTION__);
                 TestCase::assertSame($this->expectedRepositoryDir, $dir);
 
                 return $this->mockVersions;
@@ -100,6 +101,7 @@ class WebVersionsTest extends TestCase
 
             public function getLastStableMinorVersion(string $dir, bool $readLocal = self::INCLUDE_LOCAL_BRANCHES, bool $readRemote = self::INCLUDE_REMOTE_BRANCHES): ?string
             {
+                TestCase::assertTrue(\method_exists(parent::class, __FUNCTION__), parent::class . ' no more has method ' . __FUNCTION__);
                 TestCase::assertSame($this->expectedRepositoryDir, $dir);
 
                 return $this->lastStableVersion;
@@ -152,6 +154,7 @@ class WebVersionsTest extends TestCase
 
             public function getLastPatchVersion(string $dir): ?string
             {
+                TestCase::assertTrue(\method_exists(parent::class, __FUNCTION__), parent::class . ' no more has method ' . __FUNCTION__);
                 TestCase::assertSame($this->expectedRepositoryDir, $dir);
 
                 return $this->lastPatchVersion;
@@ -255,6 +258,7 @@ class WebVersionsTest extends TestCase
 
             public function getLastPatchVersionOf(string $superiorVersion, string $dir): string
             {
+                TestCase::assertTrue(\method_exists(parent::class, __FUNCTION__), parent::class . ' no more has method ' . __FUNCTION__);
                 TestCase::assertSame($this->expectedSuperiorVersion, $superiorVersion);
                 TestCase::assertSame($this->expectedRepositoryDir, $dir);
 
@@ -290,8 +294,9 @@ class WebVersionsTest extends TestCase
                 $this->mockPatchVersions = $mockPatchVersions;
             }
 
-            public function getPatchVersions(string $dir): array
+            public function getAllPatchVersions(string $dir): array
             {
+                TestCase::assertTrue(\method_exists(parent::class, __FUNCTION__), parent::class . ' no more has method ' . __FUNCTION__);
                 TestCase::assertSame($this->expectedRepositoryDir, $dir);
 
                 return $this->mockPatchVersions;

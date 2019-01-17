@@ -124,7 +124,7 @@ class WebVersions extends StrictObject
     public function getAllPatchVersions(): array
     {
         if ($this->patchVersions === null) {
-            $this->patchVersions = $this->git->getPatchVersions($this->repositoryDir);
+            $this->patchVersions = $this->git->getAllPatchVersions($this->repositoryDir);
         }
 
         return $this->patchVersions;
