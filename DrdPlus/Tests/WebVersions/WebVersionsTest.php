@@ -230,6 +230,7 @@ class WebVersionsTest extends TestCase
             'last unstable version' => ['mrs. mistress', 'mrs. mistress', 'mrs. mistress'],
             'minor version' => ['1.1', '1.1.14'],
             'major version' => ['2', '2.6.41'],
+            'detached head' => ['(HEAD detached at c6a5ba1)', '(HEAD detached at c6a5ba1)'],
         ];
     }
 
