@@ -35,8 +35,7 @@ class WebVersionsTest extends TestCase
 
     private function createGitWithAllMinorVersions(string $expectedRepositoryDir, array $mockMinorVersions): Git
     {
-        return new class($expectedRepositoryDir, $mockMinorVersions) extends Git
-        {
+        return new class($expectedRepositoryDir, $mockMinorVersions) extends Git {
             private $expectedRepositoryDir;
             private $mockVersions;
 
@@ -88,8 +87,7 @@ class WebVersionsTest extends TestCase
 
     private function createGitWithLastStableMinorVersion(string $expectedRepositoryDir, ?string $lastStableVersion): Git
     {
-        return new class($expectedRepositoryDir, $lastStableVersion) extends Git
-        {
+        return new class($expectedRepositoryDir, $lastStableVersion) extends Git {
             private $expectedRepositoryDir;
             private $lastStableVersion;
 
@@ -141,8 +139,7 @@ class WebVersionsTest extends TestCase
 
     private function createGitWithLastStablePatchVersion(string $expectedRepositoryDir, string $lastPatchVersion): Git
     {
-        return new class($expectedRepositoryDir, $lastPatchVersion) extends Git
-        {
+        return new class($expectedRepositoryDir, $lastPatchVersion) extends Git {
             private $expectedRepositoryDir;
             private $lastPatchVersion;
 
@@ -207,17 +204,19 @@ class WebVersionsTest extends TestCase
      * @test
      * @dataProvider provideSuperiorAndRelatedPatchVersions
      * @param string $superiorVersion
+     * @param string $gitPatchVersion
      * @param string $expectedPatchVersion
      * @param string $lastUnstableVersion
      */
     public function I_can_get_last_patch_version_of_minor_or_major_version(
         string $superiorVersion,
+        string $gitPatchVersion,
         string $expectedPatchVersion,
         string $lastUnstableVersion = 'mistress'
     ): void
     {
         $web = new WebVersions(
-            $this->createGitWithLastPatchVersionOf('some repository dir', $superiorVersion, $expectedPatchVersion),
+            $this->createGitWithLastPatchVersionOf('some repository dir', $superiorVersion, $gitPatchVersion),
             'some repository dir',
             $lastUnstableVersion
         );
@@ -227,10 +226,11 @@ class WebVersionsTest extends TestCase
     public function provideSuperiorAndRelatedPatchVersions(): array
     {
         return [
-            'last unstable version' => ['mrs. mistress', 'mrs. mistress', 'mrs. mistress'],
-            'minor version' => ['1.1', '1.1.14'],
-            'major version' => ['2', '2.6.41'],
-            'detached head' => ['(HEAD detached at c6a5ba1)', '(HEAD detached at c6a5ba1)'],
+            'last unstable version' => ['mrs. mistress', 'mrs. mistress', 'mrs. mistress', 'mrs. mistress'],
+            'minor version' => ['1.1', '1.1.14', '1.1.14'],
+            'major version' => ['2', '2.6.41', '2.6.41'],
+            'detached HEAD on specific commit' => ['(HEAD detached at c6a5ba1)', 'nonsense', '(HEAD detached at c6a5ba1)'],
+            'detached head on specific tag version' => ['(HEAD detached at 1.0.25)', 'nonsense', '(HEAD detached at 1.0.25)'],
         ];
     }
 
@@ -240,8 +240,7 @@ class WebVersionsTest extends TestCase
         string $lastPatchVersion
     ): Git
     {
-        return new class($expectedRepositoryDir, $expectedSuperiorVersion, $lastPatchVersion) extends Git
-        {
+        return new class($expectedRepositoryDir, $expectedSuperiorVersion, $lastPatchVersion) extends Git {
             private $expectedRepositoryDir;
             private $expectedSuperiorVersion;
             private $lastPatchVersion;
@@ -284,8 +283,7 @@ class WebVersionsTest extends TestCase
 
     private function createGitWithAllPatchVersions(string $expectedRepositoryDir, array $mockPatchVersions): Git
     {
-        return new class($expectedRepositoryDir, $mockPatchVersions) extends Git
-        {
+        return new class($expectedRepositoryDir, $mockPatchVersions) extends Git {
             private $expectedRepositoryDir;
             private $mockPatchVersions;
 
